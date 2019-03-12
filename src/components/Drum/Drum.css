@@ -1,0 +1,97 @@
+.container {
+    outline: 5px solid orange;
+    position: relative;
+    width: 660px;
+    text-align: center;
+    background-color: #b3b3b3;
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.key {
+    position: relative;
+    float: left;
+    width: 100px;
+    height: 80px;
+    margin-right: 10px;
+    border-radius: 5px;
+    padding-top: 35px;
+    box-sizing: border-box;
+    cursor: pointer;
+    background-color: grey;
+    margin-top: 10px;
+    box-shadow: black 3px 3px 5px;
+}
+
+.btnDrum {
+    width: 332px;
+    height: 272px;
+    display: inline-block;
+    margin: 20px;
+}
+
+.bankController {
+    width: 240px;
+    height: 272px;
+    display: inline-block;
+    margin: 40px 20px 0 10px;
+    vertical-align: top;
+}
+
+.power {
+    width: 100px;
+    margin: auto;
+}
+
+.powerChange {
+    width: 23px;
+    height: 19px;
+    background: blue;
+    border: 1px solid black;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.shaker {
+    width: 200px;
+    background-color: gray;
+    margin: 15px auto;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+input [type=range] {
+    -webkit-appearance: none;
+    margin: 12.5px 0;
+    width: 100%;
+}
+
+.select {
+    margin: auto;
+    border: 1px solid black;
+    width: 50px;
+    height: 20px;
+    padding: 1px;
+    background-color: black;
+}
+
+@media screen and (max-width: 650px) {
+    .container {
+        transform: scale(0.7);
+    }
+}
+
+.logo {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.textLogo {
+    font-weight: bold;
+}
