@@ -1,45 +1,65 @@
 import React, { Component } from "react";
 import Drum from "./components/Drum/Drum";
+import Controller from "./components/Controller/Controller";
 import "./App.css";
-import sounds from "./sounds/sounds";
+import bankOne from "./components/data/bankOne";
+import bankTwo from "./components/data/bankTwo";
 
 class ButtonSound {
-  constructor(keyCode, keyTrigger, id, sound) {
+  constructor(keyCode, keyTrigger, id, url) {
     this.keyCode = keyCode;
     this.keyTrigger = keyTrigger;
     this.id = id;
-    this.sound = sound;
-    this.isActivate = false;
+    this.url = url;
   }
 }
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      btnProps: []
+      btnProps: [],
+      power: true,
+      currentSounds: "Heater Kit",
+      bankSelected: "bankOne",
+      btnSelected: ""
     };
   }
   componentDidMount() {
-    const { btnProps } = this.state;
-    btnProps.push(new ButtonSound("81", "Q", "clap", sounds["clap"]));
-    btnProps.push(new ButtonSound("87", "W", "hihat", sounds["hihat"]));
-    btnProps.push(new ButtonSound("69", "E", "kick", sounds["kick"]));
-    btnProps.push(new ButtonSound("65", "A", "openhat", sounds["openhat"]));
-    btnProps.push(new ButtonSound("68", "S", "boom", sounds["boom"]));
-    btnProps.push(new ButtonSound("90", "D", "ride", sounds["ride"]));
-    btnProps.push(new ButtonSound("88", "Z", "snare", sounds["snare"]));
-    btnProps.push(new ButtonSound("67", "X", "tom", sounds["tom"]));
-    btnProps.push(new ButtonSound("67", "C", "tink", sounds["tink"]));
-    console.log("btnProps :", btnProps);
-    this.setState({
-      btnProps: btnProps
-    });
+    console.log("bankOne :", bankOne);
+    const { btnProps, bankSelected } = this.state;
+    if (bankSelected == "bankOne") {
+      bankOne.map((bank, i) => {
+        btnProps.push(
+          new ButtonSound(bank.keyCode, bank.keyTrigger, bank.id, bank.url)
+        );
+      });
+    } else {
+      bankTwo.map((bank, i) => {
+        btnProps.push(
+          new ButtonSound(bank.keyCode, bank.keyTrigger, bank.id, bank.url)
+        );
+      });
+    }
+    this.setState({ btnProps: btnProps });
   }
+  updateBtnSelected = btnSelected => {
+    this.setState({ btnSelected: btnSelected });
+  };
 
   render() {
-    const { btnProps, sounds } = this.state;
+    const { btnProps, btnSelected } = this.state;
 
-    return <Drum sounds={sounds} btnProps={btnProps} />;
+    return (
+      <React.Fragment>
+        <div className="container centered">
+          <Drum
+            updateBtnSelected={b => this.updateBtnSelected(b)}
+            btnProps={btnProps}
+          />
+          <Controller btnSelected={btnSelected} btnProps={btnProps} />
+        </div>
+      </React.Fragment>
+    );
   }
 }
 
