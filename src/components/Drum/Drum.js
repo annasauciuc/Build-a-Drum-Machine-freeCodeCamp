@@ -5,54 +5,78 @@ import "./Drum.css";
 class Drum extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.playSoundKeyPress = this.playSoundKeyPress.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+  }
+
+  playSoundKeyPress = e => {
+    const { btnProps, sounds } = this.props;
+    btnProps.map((btn, i) => {
+      const audio = document.getElementById(btn.keyTrigger);
+      console.log("audio", audio);
+      if (!audio) return;
+      audio.curentTime = 0;
+      audio.play();
+    });
+
+    //  key.classList.add("playing");
+  };
+  handleKeyPress(e) {
+    const { btnProps, sounds } = this.props;
+    btnProps.map((btn, i) => {
+      console.log("btn :", btn.keyCode);
+      if (e.keyCode == btn.keyCode) {
+        console.log("e.keyCode :", e.keyCode);
+        console.log("btn.keyCode :", btn.keyCode);
+        this.playSoundKeyPress();
+      }
+    });
+
+    // const { btnProps } = this.props;
+    // console.log("btnProps[keyCode] :", btnProps.keyCode);
+    // console.log("handleKeyPress :");
+    // if (e.keyCode == this.props.keyCode) {
+    //   this.playSoundKeyPress();
+    // }
+    // console.log("this.props.keyCode :", this.props.keyCode);
+  }
+  playSoundOnClick = event => {
+    const audio = document.querySelectorAll("audio[data-key]");
+  };
+  removeTransition = e => {
+    if (e.propertyName !== "transform") return;
+    e.target.classList.remove("playing");
+  };
+  componentDidMount = () => {
+    window.addEventListener("keydown", this.handleKeyPress);
+  };
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyPress);
   }
 
   render() {
+    const { btnProps, sounds } = this.props;
+
     return (
       <React.Fragment>
         <div className="container centered">
-          <div class="btnDrum">
-            <div data-key="	81" class="key">
-              <kbd>Q</kbd>
-              <span class="sound">Yeah</span>
-            </div>
-            <div data-key="87" class="key">
-              <kbd>W</kbd>
-              <span class="sound">we're</span>
-            </div>
-            <div data-key="69" class="key">
-              <kbd>E</kbd>
-              <span class="sound">all</span>
-            </div>
-            <div data-key="65" class="key">
-              <kbd>A</kbd>
-              <span class="sound">wonderful,</span>
-            </div>
-            <div data-key="83" class="key">
-              <kbd>S</kbd>
-              <span class="sound">wonderful</span>
-            </div>
-            <div data-key="90" class="key">
-              <kbd>D</kbd>
-              <span class="sound">people</span>
-            </div>
-            <div data-key="74" class="key">
-              <kbd>Z</kbd>
-              <span class="sound">So</span>
-            </div>
-            <div data-key="88" class="key">
-              <kbd>X</kbd>
-              <span class="sound">when</span>
-            </div>
-            <div data-key="67" class="key">
-              <kbd>C</kbd>
-              <span class="sound">did</span>
-            </div>
+          <div className="btnDrum">
+            {btnProps.map((btn, i) => {
+              return (
+                <div
+                  key={"sound" + i}
+                  className="key"
+                  // onClick={event => this.playSoundOnClick(event)}
+                >
+                  <audio className="clip" id={btn.keyTrigger} src={btn.sound} />
+                  {btn.keyTrigger}
+                </div>
+              );
+            })}
           </div>
           <div className="logo">
-          <span className="textLogo">FCC&nbsp;</span>
-          <i class="fab fa-free-code-camp"></i>
+            <span className="textLogo">FCC&nbsp;</span>
+            <i className="fab fa-free-code-camp" />
           </div>
           <div className="bankController">
             <div className="power">
@@ -63,8 +87,9 @@ class Drum extends Component {
               </div>
             </div>
             <div>
-              {" "}
               <p className="shaker">Shaker</p>
+              );
+              <p className="shaker" />
             </div>
             <div className="range">
               <input type="range" name="" id="" />
