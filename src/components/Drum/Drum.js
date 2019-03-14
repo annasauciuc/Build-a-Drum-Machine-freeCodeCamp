@@ -44,14 +44,14 @@ class Drum extends Component {
 
     return (
       <React.Fragment>
-        <div className="btnDrum">
+        <div className="btnDrum ">
           {btnProps.map((btn, i) => {
             return (
               <div
+              id={btn.id}
                 key={"sound" + i}
-                className="key"
-                onClick={() => this.playSoundKeyPress(btn)}
-              >
+                className="key drum-pad"
+                onClick={() => this.playSoundKeyPress(btn)}>
                 <audio className="clip" id={btn.keyTrigger} src={btn.url} />
                 {btn.keyTrigger}
               </div>

@@ -54,7 +54,7 @@ class Controller extends Component {
             </div>
           </div>
           <div>
-            <p className="shaker">{btnSelected ? btnSelected : display}</p>
+            <p  id="display" className="shaker">{btnSelected ? btnSelected : display}</p>
           </div>
           <div className="range">
             <input
