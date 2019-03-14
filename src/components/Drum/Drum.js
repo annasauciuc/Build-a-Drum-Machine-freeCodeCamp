@@ -24,7 +24,6 @@ class Drum extends Component {
       return e.keyCode == btn.keyCode;
     });
     if (btnSelected.length > 0) {
-     console.log('buttonSelected[0]', btnSelected[0])
       this.playSoundKeyPress(btnSelected[0]);
     }
   }

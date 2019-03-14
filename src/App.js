@@ -22,7 +22,7 @@ class App extends Component {
       bankSelected: "bankOne",
       btnSelected: "",
       sliderVal: 0.5,
-      display: "Heater Kit",
+      display: "Heater Kit"
     };
     this.updateBankSelected = this.updateBankSelected.bind(this);
   }

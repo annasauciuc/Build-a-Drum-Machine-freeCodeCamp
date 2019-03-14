@@ -9,7 +9,6 @@ class Controller extends Component {
 
   render() {
     const {
-      btnProps,
       adjustVolume,
       btnSelected,
       updatePower,
