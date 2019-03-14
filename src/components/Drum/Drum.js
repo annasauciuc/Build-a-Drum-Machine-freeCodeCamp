@@ -12,6 +12,7 @@ class Drum extends Component {
   playSoundKeyPress = btnSelected => {
     const { power } = this.props;
     const audio = document.getElementById(btnSelected.keyTrigger);
+    audio.classList.add("playing");
     if (!audio || !power) return;
     audio.curentTime = 0;
     audio.play();
@@ -23,6 +24,7 @@ class Drum extends Component {
       return e.keyCode == btn.keyCode;
     });
     if (btnSelected.length > 0) {
+     console.log('buttonSelected[0]', btnSelected[0])
       this.playSoundKeyPress(btnSelected[0]);
     }
   }
@@ -35,11 +37,12 @@ class Drum extends Component {
   };
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyPress);
+    document.removeEventListener("transitionend", this.removeTransition);
   }
 
   render() {
     const { btnProps } = this.props;
-    console.log("btnProps", btnProps);
+
     return (
       <React.Fragment>
         <div className="btnDrum">

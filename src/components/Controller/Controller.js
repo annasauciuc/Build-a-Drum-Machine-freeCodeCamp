@@ -6,17 +6,24 @@ class Controller extends Component {
   constructor(props) {
     super(props);
   }
-  currentPower = () => {};
+
   render() {
     const {
       btnProps,
+      adjustVolume,
       btnSelected,
       updatePower,
       power,
       bankSelected,
-      updateBankSelected
+      updateBankSelected,
+      sliderVal,
+      display
     } = this.props;
-    console.log('bankSelected', bankSelected)
+
+    const clips = Array.from(document.getElementsByClassName("clip"));
+    clips.forEach(sound => {
+      sound.volume = sliderVal;
+    });
     const powerSlider = power
       ? {
           float: "right"
@@ -33,13 +40,11 @@ class Controller extends Component {
             float: "left"
           };
 
-   
-
     return (
       <React.Fragment>
         <div className="logo">
           <span className="textLogo">FCC&nbsp;</span>
-          <i className="fab fa-free-code-camp" />
+          <i className="fab fa-2x fa-free-code-camp" />
         </div>
         <div className="bankController">
           <div className="power">
@@ -50,11 +55,19 @@ class Controller extends Component {
             </div>
           </div>
           <div>
-            <p className="shaker">{btnSelected}</p>
+            <p className="shaker">{btnSelected ? btnSelected : display}</p>
           </div>
           <div className="range">
-            <input type="range" name="" id="" />
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={sliderVal}
+              onChange={e => adjustVolume(e)}
+            />
           </div>
+
           <div className="power">
             {" "}
             <p>Bank</p>

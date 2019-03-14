@@ -19,10 +19,12 @@ class App extends Component {
     this.state = {
       btnProps: [],
       power: true,
-      currentSounds: "Heater Kit",
       bankSelected: "bankOne",
-      btnSelected: ""
+      btnSelected: "",
+      sliderVal: 0.5,
+      display: "Heater Kit",
     };
+    this.updateBankSelected = this.updateBankSelected.bind(this);
   }
   componentDidMount() {
     console.log("bankOne :", bankOne);
@@ -45,8 +47,8 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { btnProps, bankSelected } = this.state;
-    let result=[];
-    if (prevState.bankSelected != this.state.bankSelected){
+    let result = [];
+    if (prevState.bankSelected != this.state.bankSelected) {
       if (bankSelected == "bankOne") {
         bankOne.map((bank, i) => {
           result.push(
@@ -60,9 +62,22 @@ class App extends Component {
           );
         });
       }
-      this.setState({ btnProps: result });
+      this.setState({ btnProps: result, display: "Smooth Piano Kit" });
     }
-    
+  }
+  clearDisplay() {
+    this.setState({
+      display: ""
+    });
+  }
+  adjustVolume(e) {
+    if (this.state.power) {
+      this.setState({
+        sliderVal: e.target.value,
+        display: "Volume: " + Math.floor(e.target.value * 100)
+      });
+      setTimeout(() => this.clearDisplay(), 6000);
+    }
   }
 
   updateBankSelected = () => {
@@ -74,7 +89,7 @@ class App extends Component {
     }
   };
   updateBtnSelected = btnSelected => {
-    this.setState({ btnSelected: btnSelected });
+    this.setState({ display: btnSelected });
   };
   updatePower = () => {
     const { power } = this.state;
@@ -82,7 +97,14 @@ class App extends Component {
   };
 
   render() {
-    const { btnProps, btnSelected, power, bankSelected } = this.state;
+    const {
+      btnProps,
+      btnSelected,
+      power,
+      bankSelected,
+      sliderVal,
+      display
+    } = this.state;
 
     return (
       <React.Fragment>
@@ -93,6 +115,9 @@ class App extends Component {
             btnProps={btnProps}
           />
           <Controller
+            display={display}
+            sliderVal={sliderVal}
+            adjustVolume={e => this.adjustVolume(e)}
             updateBankSelected={() => this.updateBankSelected()}
             bankSelected={bankSelected}
             power={power}
