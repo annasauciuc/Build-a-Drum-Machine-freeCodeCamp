@@ -10,8 +10,9 @@ class Drum extends Component {
   }
 
   playSoundKeyPress = btnSelected => {
+    const { power } = this.props;
     const audio = document.getElementById(btnSelected.keyTrigger);
-    if (!audio) return;
+    if (!audio || !power) return;
     audio.curentTime = 0;
     audio.play();
     this.props.updateBtnSelected(btnSelected.id);

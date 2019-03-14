@@ -42,21 +42,64 @@ class App extends Component {
     }
     this.setState({ btnProps: btnProps });
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { btnProps, bankSelected } = this.state;
+    let result=[];
+    if (prevState.bankSelected != this.state.bankSelected){
+      if (bankSelected == "bankOne") {
+        bankOne.map((bank, i) => {
+          result.push(
+            new ButtonSound(bank.keyCode, bank.keyTrigger, bank.id, bank.url)
+          );
+        });
+      } else {
+        bankTwo.map((bank, i) => {
+          result.push(
+            new ButtonSound(bank.keyCode, bank.keyTrigger, bank.id, bank.url)
+          );
+        });
+      }
+      this.setState({ btnProps: result });
+    }
+    
+  }
+
+  updateBankSelected = () => {
+    const { bankSelected } = this.state;
+    if (bankSelected == "bankOne") {
+      this.setState({ bankSelected: "bankTwo" });
+    } else {
+      this.setState({ bankSelected: "bankOne" });
+    }
+  };
   updateBtnSelected = btnSelected => {
     this.setState({ btnSelected: btnSelected });
   };
+  updatePower = () => {
+    const { power } = this.state;
+    this.setState({ power: !power });
+  };
 
   render() {
-    const { btnProps, btnSelected } = this.state;
+    const { btnProps, btnSelected, power, bankSelected } = this.state;
 
     return (
       <React.Fragment>
         <div className="container centered">
           <Drum
+            power={power}
             updateBtnSelected={b => this.updateBtnSelected(b)}
             btnProps={btnProps}
           />
-          <Controller btnSelected={btnSelected} btnProps={btnProps} />
+          <Controller
+            updateBankSelected={() => this.updateBankSelected()}
+            bankSelected={bankSelected}
+            power={power}
+            updatePower={() => this.updatePower()}
+            btnSelected={btnSelected}
+            btnProps={btnProps}
+          />
         </div>
       </React.Fragment>
     );
