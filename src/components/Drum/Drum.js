@@ -48,10 +48,11 @@ class Drum extends Component {
           {btnProps.map((btn, i) => {
             return (
               <div
-              id={btn.id}
+                id={btn.id}
                 key={"sound" + i}
                 className="key drum-pad"
-                onClick={() => this.playSoundKeyPress(btn)}>
+                onClick={() => this.playSoundKeyPress(btn)}
+              >
                 <audio className="clip" id={btn.keyTrigger} src={btn.url} />
                 {btn.keyTrigger}
               </div>

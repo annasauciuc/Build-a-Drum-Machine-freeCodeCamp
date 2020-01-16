@@ -108,7 +108,7 @@ class App extends Component {
 
     return (
       <React.Fragment>
-        <div className="container centered" id="drum-machine">
+        <div className="container  centered" id="drum-machine">
           <Drum
             power={power}
             updateBtnSelected={b => this.updateBtnSelected(b)}
